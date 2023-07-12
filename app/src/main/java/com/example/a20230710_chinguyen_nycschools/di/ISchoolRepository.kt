@@ -6,5 +6,5 @@ import io.reactivex.Single
 
 interface ISchoolRepository {
     fun getSchoolList(): Single<List<SchoolData>>
-    fun getSchoolInfo(dbn: String): Single<SchoolInfoData>
+    fun getSchoolInfo(dbn: String): Single<List<SchoolInfoData>>
 }

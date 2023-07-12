@@ -15,7 +15,7 @@ class Repository @Inject constructor(private val schoolApiService: SchoolApiServ
             .observeOn(AndroidSchedulers.mainThread())
     }
 
-    override fun getSchoolInfo(dbn: String): Single<SchoolInfoData> {
+    override fun getSchoolInfo(dbn: String): Single<List<SchoolInfoData>> {
         return schoolApiService.getSchoolInfo(dbn)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())

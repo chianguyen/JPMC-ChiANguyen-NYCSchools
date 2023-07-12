@@ -19,7 +19,7 @@ class SchoolListViewModel @Inject constructor(private val repository: ISchoolRep
         getSchoolList()
     }
 
-    private fun getSchoolList() {
+    fun getSchoolList() {
         disposable.add(repository.getSchoolList()
             .observeOn(Schedulers.io())
             .subscribeOn(AndroidSchedulers.mainThread())

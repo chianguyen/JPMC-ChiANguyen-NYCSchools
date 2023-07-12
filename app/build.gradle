@@ -67,6 +67,7 @@ dependencies {
     debugImplementation 'androidx.compose.ui:ui-tooling'
     debugImplementation 'androidx.compose.ui:ui-test-manifest'
     testImplementation "io.mockk:mockk:1.13.4"
+    testImplementation "androidx.arch.core:core-testing:2.2.0"
 
     //Hilt dependency
     implementation 'com.google.dagger:hilt-android:2.45'

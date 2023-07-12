@@ -13,9 +13,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SchoolInfoViewModel @Inject constructor(private val repository: ISchoolRepository) : ViewModel() {
-
     private val disposable = CompositeDisposable()
-    val schoolInfo = MutableLiveData<SchoolInfoData>()
+    val schoolInfo = MutableLiveData<List<SchoolInfoData>>()
 
     fun getSchoolInfo(dbn: String) {
         disposable.add(repository.getSchoolInfo(dbn)

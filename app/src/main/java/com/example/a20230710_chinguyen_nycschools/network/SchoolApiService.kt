@@ -14,6 +14,6 @@ interface SchoolApiService {
     fun getSchoolList(): Single<List<SchoolData>>
 
     @GET(SAT_ENDPOINT)
-    fun getSchoolInfo(@Query("dbn") dbn: String): Single<SchoolInfoData>
+    fun getSchoolInfo(@Query("dbn") dbn: String): Single<List<SchoolInfoData>>
 
 }

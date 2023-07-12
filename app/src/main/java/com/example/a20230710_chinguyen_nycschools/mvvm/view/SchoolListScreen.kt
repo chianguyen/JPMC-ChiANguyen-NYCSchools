@@ -1,5 +1,6 @@
 package com.example.a20230710_chinguyen_nycschools.mvvm.view
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -39,6 +40,7 @@ import com.example.a20230710_chinguyen_nycschools.ui.theme.DividerGrey
 import com.example.a20230710_chinguyen_nycschools.ui.theme.ScreenBackground
 import com.example.a20230710_chinguyen_nycschools.ui.theme.ToolbarColor
 import com.example.a20230710_chinguyen_nycschools.ui.theme.White
+import io.reactivex.Single
 
 @Composable
 fun SchoolListScreen(viewModel: SchoolListViewModel) {
@@ -62,8 +64,9 @@ fun SchoolListScreen(viewModel: SchoolListViewModel) {
                     )
             ) {
                 schoolList.value?.let { list ->
-                    itemsIndexed(list) { _, item ->
+                    itemsIndexed(list) { index, item ->
                         SchoolListItem(
+                            index = index,
                             dbn = item.dbn,
                             name = item.name,
                             neighborhood = item.neighborhood,
@@ -81,6 +84,7 @@ fun SchoolListScreen(viewModel: SchoolListViewModel) {
 
 @Composable
 fun SchoolListItem(
+    index: Int,
     dbn: String,
     name: String,
     neighborhood: String,
@@ -90,6 +94,8 @@ fun SchoolListItem(
     totalStudent: String
 ) {
     var displayingInfo by remember { mutableStateOf(false) }
+    val schoolInfoViewModel: SchoolInfoViewModel = viewModel()
+    val schoolInfo = schoolInfoViewModel.schoolInfo.observeAsState()
 
     Card(
         modifier = Modifier.padding(bottom = dimensionResource(R.dimen.dimen_8dp))
@@ -130,6 +136,7 @@ fun SchoolListItem(
                             indication = null,
                             onClick = {
                                 displayingInfo = !displayingInfo
+                                schoolInfoViewModel.getSchoolInfo(dbn)
                             }),
                     painter = painterResource(id = if (displayingInfo) R.drawable.ic_arrow_up else R.drawable.ic_arrow_down),
                     tint = Color.Black,
@@ -148,41 +155,42 @@ fun SchoolListItem(
                         .fillMaxWidth()
                         .background(DividerGrey)
                 )
-                SchoolInfoLayout(dbn)
+                schoolInfo.value?.let { schoolInfoData ->
+                    SchoolInfoLayout(
+                        numberOfTestTakers = schoolInfoData[index].testTakerCount,
+                        mathAvg = schoolInfoData[index].satMathAverage,
+                        readingAvg = schoolInfoData[index].satReadingAverage,
+                        writingAvg = schoolInfoData[index].satReadingAverage
+                    )
+                }
             }
-
         }
     }
 }
 
 @Composable
-fun SchoolInfoLayout(dbn: String) {
-    val schoolInfoViewModel: SchoolInfoViewModel = viewModel()
-    var schoolInfo = schoolInfoViewModel.schoolInfo.observeAsState()
-
-    schoolInfoViewModel.getSchoolInfo(dbn)
-
+fun SchoolInfoLayout(
+    numberOfTestTakers: String,
+    mathAvg: String,
+    readingAvg: String,
+    writingAvg: String
+) {
     Column(
         Modifier
             .padding(dimensionResource(R.dimen.dimen_8dp))
             .fillMaxWidth()
             .wrapContentHeight()
             .background(White)
-    ){
-        Spacer(modifier = Modifier
-            .height(dimensionResource(id = R.dimen.dimen_1dp))
-            .background(DividerGrey))
+    ) {
+        Spacer(
+            modifier = Modifier
+                .height(dimensionResource(id = R.dimen.dimen_1dp))
+                .background(DividerGrey)
+        )
 
-        Text("Number of test takers: ${schoolInfo.value?.testTakerCount}")
-        Text("SAT Math average: ${schoolInfo.value?.satMathAverage}")
-        Text("SAT Reading average: ${schoolInfo.value?.satReadingAverage}")
-        Text("SAT Writing average: ${schoolInfo.value?.satWritingAverage}")
-
-//        schoolInfo.value?.let {
-//            Text("Number of test takers: ${it.testTakerCount}")
-//            Text("SAT Math average: ${it.satMathAverage}")
-//            Text("SAT Reading average: ${it.satReadingAverage}")
-//            Text("SAT Writing average: ${it.satWritingAverage}")
-//        }
+        Text("Number of test takers: $numberOfTestTakers")
+        Text("SAT Math average: $mathAvg")
+        Text("SAT Reading average: $readingAvg")
+        Text("SAT Writing average: $writingAvg")
     }
 }

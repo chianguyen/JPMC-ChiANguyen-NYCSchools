@@ -24,5 +24,5 @@ data class SchoolData(
     @SerializedName("latitude")
     val lat: String,
     @SerializedName("longitude")
-    val longitude: String
+    val long: String
 )
