@@ -79,6 +79,7 @@ fun SchoolListScreen(viewModel: SchoolListViewModel) {
                             address = item.address,
                             phone = item.phone,
                             website = item.website,
+                            email = item.email,
                             totalStudent = item.totalStudent
                         )
                     }
@@ -97,6 +98,7 @@ fun SchoolListItem(
     address: String,
     phone: String,
     website: String,
+    email: String,
     totalStudent: String
 ) {
     var displayingInfo by remember { mutableStateOf(false) }
@@ -165,7 +167,8 @@ fun SchoolListItem(
                         //phone number to dial using Intent
                         ClickableText(
                             text = phoneString,
-                            onClick = { context.startActivity(phoneIntent) })
+                            onClick = { context.startActivity(phoneIntent) },
+                        )
                     }
 
                     Row(modifier = Modifier.fillMaxWidth()) {
@@ -173,8 +176,11 @@ fun SchoolListItem(
                         //website link using Intent
                         ClickableText(
                             text = websiteString,
-                            onClick = { context.startActivity(webIntent) })
+                            onClick = { context.startActivity(webIntent) }
+                        )
                     }
+
+                    Text("Email: $email")
                     Text("Student: $totalStudent")
                 }
 
