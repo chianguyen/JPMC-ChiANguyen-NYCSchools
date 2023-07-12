@@ -16,3 +16,4 @@ val DividerGrey = Color(0xFFD3D3D3)
 val BackgroundGrey = Color(0xFFC2C2C2)
 val ToolbarColor = Color(0xFF102B4D)
 val ScreenBackground = Color(0xFFF5F5F5)
+val LinkBlue = Color.Blue
