@@ -98,7 +98,7 @@ fun SchoolListItem(
     address: String,
     phone: String,
     website: String,
-    email: String,
+    email: String? = "None provided",
     totalStudent: String
 ) {
     var displayingInfo by remember { mutableStateOf(false) }
@@ -130,12 +130,6 @@ fun SchoolListItem(
                         withStyle(
                             style = SpanStyle(textDecoration = TextDecoration.Underline, color = LinkBlue)) {
                                 append(website)
-                                addStringAnnotation(
-                                    tag = "URL",
-                                    annotation = website,
-                                    start = length - website.length,
-                                    end = length
-                                )
                             }
                     }
 
@@ -143,12 +137,6 @@ fun SchoolListItem(
                         withStyle(
                             style = SpanStyle(textDecoration = TextDecoration.Underline, color = LinkBlue)) {
                             append(phone)
-                            addStringAnnotation(
-                                tag = "DIAL",
-                                annotation = phone,
-                                start = length - phone.length,
-                                end = length
-                            )
                         }
                     }
 
