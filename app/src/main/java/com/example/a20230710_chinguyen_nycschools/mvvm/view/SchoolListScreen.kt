@@ -72,7 +72,6 @@ fun SchoolListScreen(viewModel: SchoolListViewModel) {
                 schoolList.value?.let { list ->
                     itemsIndexed(list) { index, item ->
                         SchoolListItem(
-                            index = index,
                             dbn = item.dbn,
                             name = item.name,
                             neighborhood = item.neighborhood,
@@ -91,7 +90,6 @@ fun SchoolListScreen(viewModel: SchoolListViewModel) {
 
 @Composable
 fun SchoolListItem(
-    index: Int,
     dbn: String,
     name: String,
     neighborhood: String,
@@ -201,10 +199,10 @@ fun SchoolListItem(
                 )
                 schoolInfo.value?.let { schoolInfoData ->
                     SchoolInfoLayout(
-                        numberOfTestTakers = schoolInfoData[index].testTakerCount,
-                        mathAvg = schoolInfoData[index].satMathAverage,
-                        readingAvg = schoolInfoData[index].satReadingAverage,
-                        writingAvg = schoolInfoData[index].satReadingAverage
+                        numberOfTestTakers = schoolInfoData[0].testTakerCount,
+                        mathAvg = schoolInfoData[0].satMathAverage,
+                        readingAvg = schoolInfoData[0].satReadingAverage,
+                        writingAvg = schoolInfoData[0].satReadingAverage
                     )
                 }
             }
@@ -214,10 +212,10 @@ fun SchoolListItem(
 
 @Composable
 fun SchoolInfoLayout(
-    numberOfTestTakers: String,
-    mathAvg: String,
-    readingAvg: String,
-    writingAvg: String
+    numberOfTestTakers: String? = null,
+    mathAvg: String? = null,
+    readingAvg: String? = null,
+    writingAvg: String? = null
 ) {
     Column(
         Modifier
